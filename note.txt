@@ -4,5 +4,5 @@ ini untuk mempermudah pengoreksi aja
 - click buynow tidak pakai modal, pakai halaman baru / newpage
 - notification buy product bisa tpi tidak auto hide
 - bisa di edit tambah quantity tidak lebih dari stock cmn masih belum bisa ketika barang sama nambah quantity
-- checkout berhasil yg belum berhasil di history payment belum bisa cancel // cancel belum bisa krn status yg dibuat tidak muncul
+- checkout berhasil yg belum berhasil di history payment belum bisa cancel // cancel belum bisa krn status yg tidak bisa di patch hanya bisa di get
 - stock product yg sudah di checkout masih belum bisa berkurang

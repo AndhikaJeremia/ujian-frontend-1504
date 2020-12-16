@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 
 class HistoryPage extends React.Component {
     componentDidMount() {
-        Axios.get(`http://localhost:2000/history?username=${localStorage.email}`)
+        Axios.get(`http://localhost:2000/history?email=${localStorage.email}`)
             .then((res) => this.props.getHistory(res.data))
     }
     showAccordion = () => {
@@ -21,7 +21,9 @@ class HistoryPage extends React.Component {
                                 <Accordion.Toggle as={Card.Header} eventKey={index.toLocaleString()} style={{backgroundColor: 'black', color:'white', borderRadius:'15px'}}>
                                     <div style={{display:'flex', justifyContent:'space-between'}}>
                                         <h5>Date: {item.date}</h5>
+                                        <h5>Status : {item.status}</h5>
                                         <h5>Total : IDR {item.total.toLocaleString()}</h5>
+                                        <Button variant='danger' onClick={() => this.btncancel(index)}>Cancel</Button>
                                     </div>
                                 </Accordion.Toggle>
                             </Card.Header>
@@ -48,8 +50,6 @@ class HistoryPage extends React.Component {
                 <th>Product Name</th>
                 <th>qty</th>
                 <th>Total Price</th>
-                <th>Status</th>
-                <th>Action</th>
             </thead>
         )
     }
@@ -67,8 +67,6 @@ class HistoryPage extends React.Component {
                                <td>{item.name}</td>
                                <td>{item.qty}</td>
                                <td>IDR {item.totalPrice.toLocaleString()}</td>
-                               <td>{item.status}</td>
-                               <Button variant='danger' onClick={() => this.btncancel(index)}>Cancel</Button>
                            </tr> 
                         )
                     })}
@@ -76,8 +74,19 @@ class HistoryPage extends React.Component {
         )
     }
     btncancel = (index) => {
-        
+        let newstatus = 'Canceled'
+
+        Axios.get(`http://localhost:2000/history?email=${localStorage.email}&id=${index+1}`)
+        .then((res) => {
+            let status = res.data[index].status = newstatus
+            console.log(status)
+            
+        })
+        Axios.patch(`http://localhost:2000/history?email=${localStorage.email}&id=${index+1}`) // gak bisa di patch saya mau patch statusnya gitu aja sih ya
+            .catch((err) => console.log('ulala', err))
+
     }
+
     render() {
         if (!localStorage.email) return <Redirect to='/login'/>
         return (
